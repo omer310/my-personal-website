@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect, useRef } from 'react';
 import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun } from 'lucide-react';
 import * as THREE from 'three';
@@ -11,6 +12,13 @@ const PersonalWebsite = () => {
   const rendererRef = useRef(null);
   const avatarRef = useRef(null);
   const headRef = useRef(null);
+=======
+import React, { useState, useEffect } from 'react';
+import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun } from 'lucide-react';
+
+const PersonalWebsite = () => {
+  const [darkMode, setDarkMode] = useState(false);
+>>>>>>> origin/main
 
   useEffect(() => {
     if (darkMode) {
@@ -20,6 +28,7 @@ const PersonalWebsite = () => {
     }
   }, [darkMode]);
 
+<<<<<<< HEAD
   useEffect(() => {
     if (!avatarContainerRef.current) return;
 
@@ -106,6 +115,8 @@ const PersonalWebsite = () => {
     headRef.current.rotation.x = rotationX;
   };
 
+=======
+>>>>>>> origin/main
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -124,7 +135,11 @@ const PersonalWebsite = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center">
               <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
+<<<<<<< HEAD
                 OA
+=======
+                JT
+>>>>>>> origin/main
               </div>
             </div>
             <ul className="flex space-x-6">
@@ -132,7 +147,11 @@ const PersonalWebsite = () => {
                 <li key={section}>
                   <button
                     onClick={() => scrollToSection(section)}
+<<<<<<< HEAD
                     className="flex items-center transition-transform duration-300 hover:transform hover:translate-y-1"
+=======
+                    className="flex items-center hover:text-purple-500 dark:hover:text-purple-400 transition-colors"
+>>>>>>> origin/main
                   >
                     {section === 'story' && <User className="mr-2" />}
                     {section === 'projects' && <Folder className="mr-2" />}
@@ -157,6 +176,7 @@ const PersonalWebsite = () => {
 
       <main className="container mx-auto px-6 pt-24">
         <section id="story" className="min-h-screen flex flex-col justify-center">
+<<<<<<< HEAD
           <div className="mb-20">
             <h1 className="text-6xl font-bold mb-6 leading-tight">
               👋 Hey, I'm Omar Ahmed, I'm...
@@ -182,6 +202,29 @@ const PersonalWebsite = () => {
                 from the University of Lehman College this year.
               </p>
               <p className="text-xl leading-relaxed">
+=======
+          <div className="mb-16">
+            <h1 className="text-4xl font-bold mb-4">
+              👋 Hey, I'm Omar Ahmed, I'm...
+            </h1>
+            <p className="text-3xl font-semibold mb-8">
+              Dedicated to tackling diverse challenges and creating impactful solutions.
+            </p>
+          </div>
+          <div className="flex items-start space-x-8">
+            <div className="w-1/3">
+              <div className="w-48 h-48 bg-blue-200 dark:bg-blue-800 rounded-full overflow-hidden">
+                <img src="/api/placeholder/192/192" alt="Profile" className="w-full h-full object-cover" />
+              </div>
+            </div>
+            <div className="w-2/3">
+              <p className="mb-4">
+                I was born in Brooklyn, New York and graduated with a
+                Bachelors in Computer Science, with a minor in Mathematics
+                , from the University of Lehman College. this year.
+              </p>
+              <p>
+>>>>>>> origin/main
                 In my "free time" I continue to build applications that
                 solve problems I encounter frequently, always trying
                 to implement new technologies.
@@ -193,6 +236,7 @@ const PersonalWebsite = () => {
         <section id="projects" className="py-16">
           <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
           <div className="space-y-8">
+<<<<<<< HEAD
           <ProjectCard
               title="Food Assistance Website"
               description="Revamped a food assistance application form, focusing on improving user experience and data flow. The project involved redesigning the form's interface for better usability and enhancing the backend to ensure accurate data routing. This dual-focus approach streamlined the application process, making it more efficient for users while maintaining data integrity on the backend."
@@ -215,6 +259,18 @@ const PersonalWebsite = () => {
               title="Jarvis Voice Assistant"
               description="An AI-powered voice assistant that can perform various tasks through voice commands. Utilizes OpenAI's API for natural language processing and understanding."
               technologies={['Python', 'OpenAI API']}
+=======
+            <ProjectCard
+              title="Jarvis Voice Assisstant"
+              description=""
+              technologies={['OpenAI API', 'Python']}
+              image="/api/placeholder/400/200"
+            />
+            <ProjectCard
+              title=" Food Assistance Website "
+              description=""
+              technologies={['Next.js', 'React.js', 'Firebase', 'NextAuth']}
+>>>>>>> origin/main
               image="/api/placeholder/400/200"
             />
           </div>
@@ -233,6 +289,7 @@ const PersonalWebsite = () => {
         <section id="education" className="py-16">
           <h2 className="text-3xl font-bold mb-8">Education</h2>
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+<<<<<<< HEAD
             <div className="mb-6">
               <h3 className="text-xl font-bold mb-2">Lehman College</h3>
               <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
@@ -247,11 +304,18 @@ const PersonalWebsite = () => {
               <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.7</span></p>
               <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2022</p>
             </div>
+=======
+            <h3 className="text-xl font-bold mb-2">Lehman College</h3>
+            <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
+            <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
+            <p className="text-gray-600 dark:text-gray-400">Graduated: May 2024</p>
+>>>>>>> origin/main
           </div>
         </section>
 
         <section id="honors" className="py-16">
           <h2 className="text-3xl font-bold mb-8">Honors & Awards</h2>
+<<<<<<< HEAD
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <ul className="list-disc list-inside space-y-2 text-lg">
               <li>President's List</li>
@@ -259,6 +323,13 @@ const PersonalWebsite = () => {
               <li>1st Place, University Hackathon 2022</li>
             </ul>
           </div>
+=======
+          <ul className="list-disc list-inside space-y-2 text-lg">
+            <li>President's List</li>
+            <li>Dean's List</li>
+            <li>1st Place, University Hackathon 2022</li>
+          </ul>
+>>>>>>> origin/main
         </section>
 
         <section id="connect" className="py-16">
@@ -301,4 +372,8 @@ const SkillCard = ({ title, items }) => {
   );
 };
 
+<<<<<<< HEAD
 export default PersonalWebsite;
+=======
+export default PersonalWebsite;
+>>>>>>> origin/main
