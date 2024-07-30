@@ -373,7 +373,7 @@ const ContactSection = () => {
           <div className="mt-8">
             <h4 className="text-lg font-semibold mb-2">Email</h4>
             <a href="mailto:Omersalahabuzaid@gmail.com" className="text-blue-500 hover:underline">
-              Omersalahabuzaid@gmail.com
+              omersalahabuzaid@gmail.com
             </a>
           </div>
         </div>
