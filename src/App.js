@@ -1,8 +1,11 @@
-<<<<<<< HEAD
-import React, { useState, useEffect, useRef } from 'react';
-import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun, Send, Linkedin, Github, Twitter } from 'lucide-react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { Parallax } from 'react-parallax';
+import { motion } from 'framer-motion';
+import ParticleBackground from './ParticleBackground';
+import StorySection from './StorySection';
 
 const PersonalWebsite = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -12,13 +15,6 @@ const PersonalWebsite = () => {
   const rendererRef = useRef(null);
   const avatarRef = useRef(null);
   const headRef = useRef(null);
-=======
-import React, { useState, useEffect } from 'react';
-import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun } from 'lucide-react';
-
-const PersonalWebsite = () => {
-  const [darkMode, setDarkMode] = useState(false);
->>>>>>> origin/main
 
   useEffect(() => {
     if (darkMode) {
@@ -28,7 +24,6 @@ const PersonalWebsite = () => {
     }
   }, [darkMode]);
 
-<<<<<<< HEAD
   useEffect(() => {
     if (!avatarContainerRef.current) return;
 
@@ -95,6 +90,9 @@ const PersonalWebsite = () => {
 
   const animate = () => {
     requestAnimationFrame(animate);
+    if (avatarRef.current) {
+      avatarRef.current.rotation.y += 0.005;
+    }
     if (rendererRef.current && sceneRef.current && cameraRef.current) {
       rendererRef.current.render(sceneRef.current, cameraRef.current);
     }
@@ -115,8 +113,6 @@ const PersonalWebsite = () => {
     headRef.current.rotation.x = rotationX;
   };
 
-=======
->>>>>>> origin/main
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -129,232 +125,173 @@ const PersonalWebsite = () => {
   };
 
   return (
-    <div className={`min-h-screen ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} transition-colors duration-300`}>
-      <header className="fixed top-0 left-0 right-0 bg-white dark:bg-gray-800 shadow-md z-10">
-        <nav className="container mx-auto px-6 py-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
+    <div className={`min-h-screen relative ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} transition-colors duration-300`}>
+      <ParticleBackground />
+      <div className="relative z-10">
+        <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 shadow-md z-10 rounded-full">
+          <nav className="px-6 py-3">
+            <div className="flex items-center space-x-6">
               <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-<<<<<<< HEAD
                 OA
-=======
-                JT
->>>>>>> origin/main
               </div>
-            </div>
-            <ul className="flex space-x-6">
-              {['story', 'projects', 'skills', 'education', 'honors', 'connect'].map((section) => (
-                <li key={section}>
-                  <button
-                    onClick={() => scrollToSection(section)}
-<<<<<<< HEAD
-                    className="flex items-center transition-transform duration-300 hover:transform hover:translate-y-1"
-=======
-                    className="flex items-center hover:text-purple-500 dark:hover:text-purple-400 transition-colors"
->>>>>>> origin/main
-                  >
-                    {section === 'story' && <User className="mr-2" />}
-                    {section === 'projects' && <Folder className="mr-2" />}
-                    {section === 'skills' && <Layers className="mr-2" />}
-                    {section === 'education' && <GraduationCap className="mr-2" />}
-                    {section === 'honors' && <Award className="mr-2" />}
-                    {section === 'connect' && <Mail className="mr-2" />}
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                  </button>
-                </li>
-              ))}
-            </ul>
-            <button
-              onClick={toggleDarkMode}
-              className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-            >
-              {darkMode ? <Sun /> : <Moon />}
-            </button>
-          </div>
-        </nav>
-      </header>
-
-      <main className="container mx-auto px-6 pt-24">
-        <section id="story" className="min-h-screen flex flex-col justify-center">
-<<<<<<< HEAD
-          <div className="mb-20">
-            <h1 className="text-6xl font-bold mb-6 leading-tight">
-              👋 Hey, I'm Omar Ahmed, I'm...
-            </h1>
-            <p className="text-4xl font-semibold mb-10 leading-snug">
-              Merging creativity with computational thinking to push technological boundaries.
-            </p>
-          </div>
-          <div className="flex items-start space-x-12">
-            <div className="w-1/3">
-              <div 
-                ref={avatarContainerRef}
-                onMouseMove={handleMouseMove}
-                className="w-64 h-64 bg-blue-200 dark:bg-blue-800 rounded-full overflow-hidden shadow-lg"
+              <ul className="flex space-x-6">
+                {['story', 'projects', 'skills', 'education', 'honors', 'connect'].map((section) => (
+                  <li key={section}>
+                    <button
+                      onClick={() => scrollToSection(section)}
+                      className="flex items-center transition-transform duration-300 hover:transform hover:translate-y-1"
+                    >
+                      {section === 'story' && <User className="mr-2" />}
+                      {section === 'projects' && <Folder className="mr-2" />}
+                      {section === 'skills' && <Layers className="mr-2" />}
+                      {section === 'education' && <GraduationCap className="mr-2" />}
+                      {section === 'honors' && <Award className="mr-2" />}
+                      {section === 'connect' && <Mail className="mr-2" />}
+                      {section.charAt(0).toUpperCase() + section.slice(1)}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={toggleDarkMode}
+                className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
               >
-                {/* The 3D avatar will be rendered here */}
+                {darkMode ? <Sun /> : <Moon />}
+              </button>
+            </div>
+          </nav>
+        </header>
+
+        <main className="container mx-auto px-6 pt-32">
+          <StorySection />
+
+          <section id="projects" className="py-16">
+            <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
+            <div className="space-y-8">
+              <ProjectCard
+                title="Food Assistance Website"
+                description="Revamped a food assistance application form, focusing on improving user experience and data flow. The project involved redesigning the form's interface for better usability and enhancing the backend to ensure accurate data routing. This dual-focus approach streamlined the application process, making it more efficient for users while maintaining data integrity on the backend."
+                technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React']}
+                image="/api/placeholder/400/200"
+              />
+              <ProjectCard
+                title="Black Mentor Network Website"
+                description="Designed and implemented a website for the Black Mentor Network, a non-profit organization that provides mentorship to underprivileged individuals. The website was built using Next.js, Tailwind CSS, and Firebase, and it allows users to browse mentorship opportunities and apply to the ones that interest them."
+                technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React', 'Next.js', 'Tailwind CSS']}
+                image="/api/placeholder/400/200"
+              />
+              <ProjectCard
+                title="Live Transcription"
+                description="Turn your computer's sounds into text with this nifty app! Using Deepgram's API, it grabs your PC's audio and converts it to readable words in real-time. Watch as computer babble becomes actual sentences in a cool little window. It's tech magic made simple!"
+                technologies={['Python', 'Deepgram API']}
+                image="/api/placeholder/400/200"
+              />
+              <ProjectCard
+                title="Jarvis Voice Assistant"
+                description="An AI-powered voice assistant that can perform various tasks through voice commands. Utilizes OpenAI's API for natural language processing and understanding."
+                technologies={['Python', 'OpenAI API']}
+                image="/api/placeholder/400/200"
+              />
+            </div>
+          </section>
+
+          <section id="skills" className="py-16">
+            <h2 className="text-3xl font-bold mb-8">Skills</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <SkillCard
+                title="Frontend Development"
+                items={[
+                  { name: 'React', proficiency: 90 },
+                  { name: 'Next.js', proficiency: 85 },
+                  { name: 'Vue.js', proficiency: 75 },
+                  { name: 'HTML/CSS', proficiency: 95 }
+                ]}
+              />
+              <SkillCard
+                title="Backend Development"
+                items={[
+                  { name: 'Node.js', proficiency: 80 },
+                  { name: 'Express', proficiency: 75 },
+                  { name: 'Python', proficiency: 90 },
+                  { name: 'Django', proficiency: 70 }
+                ]}
+              />
+              <SkillCard
+                title="Database"
+                items={[
+                  { name: 'MongoDB', proficiency: 85 },
+                  { name: 'PostgreSQL', proficiency: 80 },
+                  { name: 'Firebase', proficiency: 90 }
+                ]}
+              />
+              <SkillCard
+                title="DevOps"
+                items={[
+                  { name: 'Docker', proficiency: 70 },
+                  { name: 'Kubernetes', proficiency: 60 },
+                  { name: 'CI/CD', proficiency: 75 },
+                  { name: 'AWS', proficiency: 70 }
+                ]}
+              />
+            </div>
+          </section>
+
+          <section id="education" className="py-16">
+            <h2 className="text-3xl font-bold mb-8">Education</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+              <div className="mb-6">
+                <h3 className="text-xl font-bold mb-2">Lehman College</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.65</span></p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2024</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Relevant Coursework: Data Structures and Algorithms, Machine Learning, Web Development</p>
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-2">Bronx Community College</h3>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Associate Degree in Computer Science</p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.7</span></p>
+                <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2022</p>
               </div>
             </div>
-            <div className="w-2/3">
-              <p className="text-xl mb-6 leading-relaxed">
-                I was born in Brooklyn, New York and graduated with a
-                Bachelors in Computer Science, with a minor in Mathematics,
-                from the University of Lehman College this year.
-              </p>
-              <p className="text-xl leading-relaxed">
-=======
-          <div className="mb-16">
-            <h1 className="text-4xl font-bold mb-4">
-              👋 Hey, I'm Omar Ahmed, I'm...
-            </h1>
-            <p className="text-3xl font-semibold mb-8">
-              Dedicated to tackling diverse challenges and creating impactful solutions.
-            </p>
-          </div>
-          <div className="flex items-start space-x-8">
-            <div className="w-1/3">
-              <div className="w-48 h-48 bg-blue-200 dark:bg-blue-800 rounded-full overflow-hidden">
-                <img src="/api/placeholder/192/192" alt="Profile" className="w-full h-full object-cover" />
-              </div>
+          </section>
+
+          <section id="honors" className="py-16">
+            <h2 className="text-3xl font-bold mb-8">Honors & Awards</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+              <ul className="list-disc list-inside space-y-2 text-lg">
+                <li>President's List</li>
+                <li>Dean's List</li>
+                <li>1st Place, University Hackathon 2022</li>
+              </ul>
             </div>
-            <div className="w-2/3">
-              <p className="mb-4">
-                I was born in Brooklyn, New York and graduated with a
-                Bachelors in Computer Science, with a minor in Mathematics
-                , from the University of Lehman College. this year.
-              </p>
-              <p>
->>>>>>> origin/main
-                In my "free time" I continue to build applications that
-                solve problems I encounter frequently, always trying
-                to implement new technologies.
-              </p>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <section id="projects" className="py-16">
-          <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
-          <div className="space-y-8">
-<<<<<<< HEAD
-          <ProjectCard
-              title="Food Assistance Website"
-              description="Revamped a food assistance application form, focusing on improving user experience and data flow. The project involved redesigning the form's interface for better usability and enhancing the backend to ensure accurate data routing. This dual-focus approach streamlined the application process, making it more efficient for users while maintaining data integrity on the backend."
-              technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React']}
-              image="/api/placeholder/400/200"
-            />
-            <ProjectCard
-              title="Black Mentor Network Website"
-              description="Designed and implemented a website for the Black Mentor Network, a non-profit organization that provides mentorship to underprivileged individuals. The website was built using Next.js, Tailwind CSS, and Firebase, and it allows users to browse mentorship opportunities and apply to the ones that interest them."
-              technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React', 'Next.js', 'Tailwind CSS']}
-              image="/api/placeholder/400/200"
-            />
-            <ProjectCard
-              title="Live Transcription"
-              description="Turn your computer's sounds into text with this nifty app! Using Deepgram's API, it grabs your PC's audio and converts it to readable words in real-time. Watch as computer babble becomes actual sentences in a cool little window. It's tech magic made simple!"
-              technologies={['Python', 'Deepgram API']}
-              image="/api/placeholder/400/200"
-            />
-            <ProjectCard
-              title="Jarvis Voice Assistant"
-              description="An AI-powered voice assistant that can perform various tasks through voice commands. Utilizes OpenAI's API for natural language processing and understanding."
-              technologies={['Python', 'OpenAI API']}
-=======
-            <ProjectCard
-              title="Jarvis Voice Assisstant"
-              description=""
-              technologies={['OpenAI API', 'Python']}
-              image="/api/placeholder/400/200"
-            />
-            <ProjectCard
-              title=" Food Assistance Website "
-              description=""
-              technologies={['Next.js', 'React.js', 'Firebase', 'NextAuth']}
->>>>>>> origin/main
-              image="/api/placeholder/400/200"
-            />
-          </div>
-        </section>
-
-        <section id="skills" className="py-16">
-          <h2 className="text-3xl font-bold mb-8">Skills</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <SkillCard title="Frontend Development" items={['React', 'Next.js', 'Vue.js', 'HTML/CSS']} />
-            <SkillCard title="Backend Development" items={['Node.js', 'Express', 'Python', 'Django']} />
-            <SkillCard title="Database" items={['MongoDB', 'PostgreSQL', 'Firebase']} />
-            <SkillCard title="DevOps" items={['Docker', 'Kubernetes', 'CI/CD', 'AWS']} />
-          </div>
-        </section>
-
-        <section id="education" className="py-16">
-          <h2 className="text-3xl font-bold mb-8">Education</h2>
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-<<<<<<< HEAD
-            <div className="mb-6">
-              <h3 className="text-xl font-bold mb-2">Lehman College</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.65</span></p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2024</p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Relevant Coursework: Data Structures and Algorithms, Machine Learning, Web Development</p>
-            </div>
-            <div>
-              <h3 className="text-xl font-bold mb-2">Bronx Community College</h3>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Associate Degree in Computer Science</p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.7</span></p>
-              <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2022</p>
-            </div>
-=======
-            <h3 className="text-xl font-bold mb-2">Lehman College</h3>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
-            <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
-            <p className="text-gray-600 dark:text-gray-400">Graduated: May 2024</p>
->>>>>>> origin/main
-          </div>
-        </section>
-
-        <section id="honors" className="py-16">
-          <h2 className="text-3xl font-bold mb-8">Honors & Awards</h2>
-<<<<<<< HEAD
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <ul className="list-disc list-inside space-y-2 text-lg">
-              <li>President's List</li>
-              <li>Dean's List</li>
-              <li>1st Place, University Hackathon 2022</li>
-            </ul>
-          </div>
-=======
-          <ul className="list-disc list-inside space-y-2 text-lg">
-            <li>President's List</li>
-            <li>Dean's List</li>
-            <li>1st Place, University Hackathon 2022</li>
-          </ul>
->>>>>>> origin/main
-        </section>
-
-        <section id="connect" className="py-16">
-          <h2 className="text-3xl font-bold mb-8">Connect</h2>
-          <p className="mb-6 text-lg">I'm always open to new opportunities and collaborations. Feel free to reach out!</p>
-          <a href="mailto:Omersalahabuzaid@gmail.com" className="bg-purple-500 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-purple-600 transition-colors">
-            Get in Touch
-          </a>
-        </section>
-      </main>
+          <ContactSection />
+        </main>
+      </div>
     </div>
   );
 };
 
 const ProjectCard = ({ title, description, technologies, image }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 transition-all duration-300 hover:shadow-xl">
-      <h3 className="text-2xl font-bold mb-3">{title}</h3>
-      <p className="mb-4 text-gray-600 dark:text-gray-300">{description}</p>
-      <div className="flex flex-wrap gap-2 mb-4">
-        {technologies.map((tech, index) => (
-          <span key={index} className="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm">{tech}</span>
-        ))}
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl group">
+      <div className="relative">
+        <img src={image} alt={title} className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110" />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <button className="bg-white text-black px-4 py-2 rounded-full">View Project</button>
+        </div>
       </div>
-      <img src={image} alt={title} className="w-full h-48 object-cover rounded-lg" />
+      <div className="p-6">
+        <h3 className="text-2xl font-bold mb-3">{title}</h3>
+        <p className="mb-4 text-gray-600 dark:text-gray-300">{description}</p>
+        <div className="flex flex-wrap gap-2">
+          {technologies.map((tech, index) => (
+            <span key={index} className="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm">{tech}</span>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
@@ -363,17 +300,98 @@ const SkillCard = ({ title, items }) => {
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 transition-all duration-300 hover:shadow-xl">
       <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <ul className="list-disc list-inside space-y-1">
+      <ul className="space-y-2">
         {items.map((item, index) => (
-          <li key={index}>{item}</li>
+          <li key={index} className="flex flex-col">
+            <span>{item.name}</span>
+            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+              <div 
+                className="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out" 
+                style={{ width: `${item.proficiency}%` }}
+              ></div>
+            </div>
+          </li>
         ))}
       </ul>
     </div>
   );
 };
 
-<<<<<<< HEAD
+const ContactSection = () => {
+  const [message, setMessage] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    console.log('Message submitted:', message);
+    setMessage('');
+  };
+
+  return (
+    <section id="connect" className="py-16">
+      <h2 className="text-3xl font-bold mb-8">Let's Connect</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 className="text-2xl font-semibold mb-4">Get in Touch</h3>
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            I'm always open to new opportunities and collaborations. Feel free to reach out!
+          </p>
+          <motion.form 
+            onSubmit={handleSubmit}
+            className="space-y-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="relative">
+              <textarea
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Your message..."
+                className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none h-32"
+                required
+              />
+              <button
+                type="submit"
+                className="absolute bottom-3 right-3 bg-blue-500 text-white p-2 rounded-full hover:bg-blue-600 transition-colors"
+              >
+                <Send size={20} />
+              </button>
+            </div>
+          </motion.form>
+        </div>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+          <h3 className="text-2xl font-semibold mb-4">Connect with Me</h3>
+          <p className="mb-6 text-gray-600 dark:text-gray-300">
+            Find me on these platforms:
+          </p>
+          <div className="flex space-x-4">
+            <SocialLink href="https://linkedin.com/in/yourusername" icon={<Linkedin />} label="LinkedIn" />
+            <SocialLink href="https://github.com/yourusername" icon={<Github />} label="GitHub" />
+            <SocialLink href="https://twitter.com/yourusername" icon={<Twitter />} label="Twitter" />
+          </div>
+          <div className="mt-8">
+            <h4 className="text-lg font-semibold mb-2">Email</h4>
+            <a href="mailto:Omersalahabuzaid@gmail.com" className="text-blue-500 hover:underline">
+              Omersalahabuzaid@gmail.com
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const SocialLink = ({ href, icon, label }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="bg-gray-200 dark:bg-gray-700 p-3 rounded-full hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
+    aria-label={label}
+  >
+    {icon}
+  </a>
+);
+
 export default PersonalWebsite;
-=======
-export default PersonalWebsite;
->>>>>>> origin/main
