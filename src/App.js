@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun, Send, Linkedin, Github, Twitter } from 'lucide-react';
+import { User, Folder, Layers, Mail, Award, GraduationCap, Moon, Sun, Send, Linkedin, Github, Twitter, X, ExternalLink } from 'lucide-react';
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { Parallax } from 'react-parallax';
 import { motion } from 'framer-motion';
 import ParticleBackground from './ParticleBackground';
 import StorySection from './StorySection';
+import BMN from './Images/BMN.png';
+import FA from './Images/FA.png';
+import LIVE from './Images/LIVE.png';
+import LOGO from './Images/Logo.png'; // Import your logo image
+
 
 const PersonalWebsite = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -124,6 +129,47 @@ const PersonalWebsite = () => {
     }
   };
 
+  const SkillCard = ({ title, items }) => {
+    const [hoveredSkill, setHoveredSkill] = useState(null);
+  
+    return (
+      <motion.div 
+        className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 transition-all duration-300 hover:shadow-xl"
+        whileHover={{ scale: 1.05 }}
+      >
+        <h3 className="text-xl font-semibold mb-3">{title}</h3>
+        <ul className="space-y-2">
+          {items.map((item, index) => (
+            <motion.li 
+              key={index} 
+              className="flex flex-col"
+              onHoverStart={() => setHoveredSkill(item.name)}
+              onHoverEnd={() => setHoveredSkill(null)}
+            >
+              <div className="flex justify-between items-center">
+                <span>{item.name}</span>
+                <span className="text-sm text-gray-500">{item.proficiency}%</span>
+              </div>
+              <motion.div 
+                className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700 mt-1"
+                initial={{ width: 0 }}
+                animate={{ width: hoveredSkill === item.name ? '100%' : '0%' }}
+                transition={{ duration: 0.5 }}
+              >
+                <motion.div 
+                  className="bg-blue-600 h-2.5 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${item.proficiency}%` }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                ></motion.div>
+              </motion.div>
+            </motion.li>
+          ))}
+        </ul>
+      </motion.div>
+    );
+  };
+
   return (
     <div className={`min-h-screen relative ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} transition-colors duration-300`}>
       <ParticleBackground />
@@ -131,8 +177,12 @@ const PersonalWebsite = () => {
         <header className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-white dark:bg-gray-800 shadow-md z-10 rounded-full">
           <nav className="px-6 py-3">
             <div className="flex items-center space-x-6">
-              <div className="w-10 h-10 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
-                OA
+              <div className="w-20 h-20 rounded-full overflow-hidden flex-shrink-0">
+                <img 
+                  src={LOGO} 
+                  alt="Logo" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <ul className="flex space-x-6">
                 {['story', 'projects', 'skills', 'education', 'honors', 'connect'].map((section) => (
@@ -167,37 +217,46 @@ const PersonalWebsite = () => {
 
           <section id="projects" className="py-16">
             <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
-            <div className="space-y-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <ProjectCard
                 title="Food Assistance Website"
-                description="Revamped a food assistance application form, focusing on improving user experience and data flow. The project involved redesigning the form's interface for better usability and enhancing the backend to ensure accurate data routing. This dual-focus approach streamlined the application process, making it more efficient for users while maintaining data integrity on the backend."
+                description="Revamped a food assistance application form, focusing on improving user experience and data flow. Key features include a streamlined application process, real-time eligibility checking, and multilingual support."
                 technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React']}
-                image="/api/placeholder/400/200"
+                image={FA}
+                projectLink="https://foodassistance.example.com"
               />
               <ProjectCard
                 title="Black Mentor Network Website"
                 description="Designed and implemented a website for the Black Mentor Network, a non-profit organization that provides mentorship to underprivileged individuals. The website was built using Next.js, Tailwind CSS, and Firebase, and it allows users to browse mentorship opportunities and apply to the ones that interest them."
                 technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React', 'Next.js', 'Tailwind CSS']}
-                image="/api/placeholder/400/200"
+                image={BMN}
+                projectLink="https://blackmentornetwork.example.com"
               />
               <ProjectCard
                 title="Live Transcription"
                 description="Turn your computer's sounds into text with this nifty app! Using Deepgram's API, it grabs your PC's audio and converts it to readable words in real-time. Watch as computer babble becomes actual sentences in a cool little window. It's tech magic made simple!"
                 technologies={['Python', 'Deepgram API']}
-                image="/api/placeholder/400/200"
+                image={LIVE}
+                projectLink="https://github.com/omer310/real-time-audio-transcription"
               />
               <ProjectCard
                 title="Jarvis Voice Assistant"
                 description="An AI-powered voice assistant that can perform various tasks through voice commands. Utilizes OpenAI's API for natural language processing and understanding."
                 technologies={['Python', 'OpenAI API']}
-                image="/api/placeholder/400/200"
+                image="/path/to/jarvis-image.jpg"
+                projectLink="https://jarvis.example.com"
               />
             </div>
           </section>
 
           <section id="skills" className="py-16">
-            <h2 className="text-3xl font-bold mb-8">Skills</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <h2 className="text-3xl font-bold mb-8 text-center">Skills</h2>
+            <motion.div 
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, staggerChildren: 0.1 }}
+            >
               <SkillCard
                 title="Frontend Development"
                 items={[
@@ -233,7 +292,7 @@ const PersonalWebsite = () => {
                   { name: 'AWS', proficiency: 70 }
                 ]}
               />
-            </div>
+            </motion.div>
           </section>
 
           <section id="education" className="py-16">
@@ -274,45 +333,33 @@ const PersonalWebsite = () => {
   );
 };
 
-const ProjectCard = ({ title, description, technologies, image }) => {
+const ProjectCard = ({ title, description, technologies, image, projectLink }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl group">
-      <div className="relative">
-        <img src={image} alt={title} className="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-110" />
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <button className="bg-white text-black px-4 py-2 rounded-full">View Project</button>
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-xl">
+      <div className="relative h-64 md:h-80">
+        <img src={image} alt={title} className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+          <h3 className="text-2xl font-bold text-white text-center px-4">{title}</h3>
         </div>
       </div>
       <div className="p-6">
-        <h3 className="text-2xl font-bold mb-3">{title}</h3>
         <p className="mb-4 text-gray-600 dark:text-gray-300">{description}</p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 mb-4">
           {technologies.map((tech, index) => (
             <span key={index} className="bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm">{tech}</span>
           ))}
         </div>
+        {projectLink && (
+          <a 
+            href={projectLink} 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="inline-flex items-center text-blue-500 hover:text-blue-600 transition-colors"
+          >
+            Visit Project <ExternalLink className="ml-2" size={18} />
+          </a>
+        )}
       </div>
-    </div>
-  );
-};
-
-const SkillCard = ({ title, items }) => {
-  return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-5 transition-all duration-300 hover:shadow-xl">
-      <h3 className="text-xl font-semibold mb-3">{title}</h3>
-      <ul className="space-y-2">
-        {items.map((item, index) => (
-          <li key={index} className="flex flex-col">
-            <span>{item.name}</span>
-            <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
-              <div 
-                className="bg-blue-600 h-2.5 rounded-full transition-all duration-500 ease-out" 
-                style={{ width: `${item.proficiency}%` }}
-              ></div>
-            </div>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 };
@@ -366,9 +413,9 @@ const ContactSection = () => {
             Find me on these platforms:
           </p>
           <div className="flex space-x-4">
-            <SocialLink href="https://linkedin.com/in/yourusername" icon={<Linkedin />} label="LinkedIn" />
-            <SocialLink href="https://github.com/yourusername" icon={<Github />} label="GitHub" />
-            <SocialLink href="https://twitter.com/yourusername" icon={<Twitter />} label="Twitter" />
+            <SocialLink href="https://www.linkedin.com/in/omar-ahmed-9214b6186/" icon={<Linkedin />} label="LinkedIn" />
+            <SocialLink href="https://github.com/omer310" icon={<Github />} label="GitHub" />
+            <SocialLink href="https://x.com/user_l0_0l" icon={<Twitter />} label="Twitter" />
           </div>
           <div className="mt-8">
             <h4 className="text-lg font-semibold mb-2">Email</h4>
