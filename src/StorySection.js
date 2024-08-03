@@ -19,7 +19,7 @@ const StorySection = () => {
   };
 
   return (
-    <section id="story" className="py-16 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <section id="story" className="py-16 bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 rounded-xl">
       <div className="container mx-auto px-4">
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
@@ -38,8 +38,8 @@ const StorySection = () => {
             className="w-full lg:w-1/3"
           >
             <div className="relative w-64 h-64 mx-auto">
-              <div className="absolute inset-0 bg-blue-500 rounded-full opacity-10 animate-pulse"></div>
-              <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-white dark:border-gray-800 shadow-lg">
+              <div className="absolute inset-0 bg-blue-500 rounded-lg opacity-10 rounded-3xl"></div>
+              <div className="absolute inset-0 overflow-hidden rounded-lg border-4 border-white dark:border-gray-800 shadow-lg rounded-3xl">
                 <img 
                   src={Avatar} 
                   alt="Your Avatar" 
@@ -98,10 +98,10 @@ const StorySection = () => {
               className="mt-8 bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6"
             >
               <h3 className="text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">My Unique Perspective</h3>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4 text-justify">
               My path from Sudan to the USA has been quite the ride, opening my eyes to new ways of thinking and problem-solving. I've picked up the knack for adapting on the fly and coming up with creative fixes.
               </p>
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-gray-600 dark:text-gray-300 text-justify">
               I get a real kick out of using tech to make a difference in everyday life. With my unique background, I'm keen to jump in and cook up some exciting ideas in the tech world. Let's team up and create something awesome!
               </p>
               <motion.button

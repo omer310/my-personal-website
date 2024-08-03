@@ -1,92 +1,153 @@
-import React, { useCallback } from 'react';
-import Particles from "react-tsparticles";
-import { loadFull } from "tsparticles";
+"use client";
 
-const ParticleBackground = () => {
-  const particlesInit = useCallback(async engine => {
-    await loadFull(engine);
-  }, []);
+import React, { useEffect, useId, useRef, useState } from "react";
+import { motion } from "framer-motion";
+
+const cn = (...classes) => classes.filter(Boolean).join(' ');
+
+const GridPattern = ({
+  width = 40,
+  height = 40,
+  x = -1,
+  y = -1,
+  strokeDasharray = 0,
+  numSquares = 50,
+  className,
+  maxOpacity = 0.5,
+  duration = 4,
+  repeatDelay = 0.5,
+  ...props
+}) => {
+  const id = useId();
+  const containerRef = useRef(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [squares, setSquares] = useState(() => generateSquares(numSquares));
+
+  function getPos() {
+    return [
+      Math.floor((Math.random() * dimensions.width) / width),
+      Math.floor((Math.random() * dimensions.height) / height),
+    ];
+  }
+
+  function generateSquares(count) {
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      pos: getPos(),
+    }));
+  }
+
+  const updateSquarePosition = (id) => {
+    setSquares((currentSquares) =>
+      currentSquares.map((sq) =>
+        sq.id === id
+          ? {
+              ...sq,
+              pos: getPos(),
+            }
+          : sq,
+      ),
+    );
+  };
+
+  useEffect(() => {
+    if (dimensions.width && dimensions.height) {
+      setSquares(generateSquares(numSquares));
+    }
+  }, [dimensions, numSquares]);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        setDimensions({
+          width: entry.contentRect.width,
+          height: entry.contentRect.height,
+        });
+      }
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    return () => {
+      if (containerRef.current) {
+        resizeObserver.unobserve(containerRef.current);
+      }
+    };
+  }, [containerRef]);
 
   return (
-    <Particles
-      id="tsparticles"
-      init={particlesInit}
-      options={{
-        background: {
-          color: {
-            value: "transparent",
-          },
-        },
-        fpsLimit: 120,
-        interactivity: {
-          events: {
-            onClick: {
-              enable: false,
-              mode: "push",
-            },
-            onHover: {
-              enable: false,
-              mode: "repulse",
-            },
-            resize: true,
-          },
-          modes: {
-            push: {
-              quantity: 4,
-            },
-            repulse: {
-              distance: 100,
-              duration: 0.4,
-            },
-          },
-        },
-        particles: {
-          color: {
-            value: "#367588",
-          },
-          links: {
-            color: "#367588",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 1,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: {
-              default: "bounce",
-            },
-            random: false,
-            speed: 2,
-            straight: false,
-            bounce: true,
-            attract: {
-              enable: false,
-              rotateX: 600,
-              rotateY: 1200
-            },
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 700,
-            },
-            value: 70,
-          },
-          opacity: {
-            value: 0.5,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 1, max: 5 },
-          },
-        },
-        detectRetina: true,
-      }}
-    />
+    <svg
+      ref={containerRef}
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute inset-0 h-full w-full fill-gray-400/30 stroke-gray-400/30",
+        className,
+      )}
+      {...props}
+    >
+      <defs>
+        <pattern
+          id={id}
+          width={width}
+          height={height}
+          patternUnits="userSpaceOnUse"
+          x={x}
+          y={y}
+        >
+          <path
+            d={`M.5 ${height}V.5H${width}`}
+            fill="none"
+            strokeDasharray={strokeDasharray}
+          />
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill={`url(#${id})`} />
+      <svg x={x} y={y} className="overflow-visible">
+        {squares.map(({ pos: [x, y], id }, index) => (
+          <motion.rect
+            initial={{ opacity: 0 }}
+            animate={{ opacity: maxOpacity }}
+            transition={{
+              duration,
+              repeat: 1,
+              delay: index * 0.1,
+              repeatType: "reverse",
+            }}
+            onAnimationComplete={() => updateSquarePosition(id)}
+            key={`${x}-${y}-${index}`}
+            width={width - 1}
+            height={height - 1}
+            x={x * width + 1}
+            y={y * height + 1}
+            fill="currentColor"
+            strokeWidth="0"
+          />
+        ))}
+      </svg>
+    </svg>
+  );
+};
+
+const ParticleBackground = () => {
+  return (
+    <div className="fixed inset-0 w-full h-full pointer-events-none z-0 overflow-hidden">
+      <GridPattern
+        width={40}
+        height={40}
+        x={-1}
+        y={-1}
+        strokeDasharray={0}
+        numSquares={50}
+        className="text-gray-400/30 dark:text-gray-600/30"
+        maxOpacity={0.5}
+        duration={4}
+        repeatDelay={0.5}
+      />
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-t from-white to-transparent to-90% dark:from-black" />
+    </div>
   );
 };
 
