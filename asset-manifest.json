@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/omer310/my-personal-website/static/css/main.ca747835.css",
+    "main.js": "/omer310/my-personal-website/static/js/main.d953d149.js",
+    "static/media/BMN.png": "/omer310/my-personal-website/static/media/BMN.c40378781b6cf0365b48.png",
+    "static/media/SET.png": "/omer310/my-personal-website/static/media/SET.fa75153689914416b0c4.png",
+    "static/media/Logo.png": "/omer310/my-personal-website/static/media/Logo.5e01a3526cc1159c8935.png",
+    "static/media/FA.png": "/omer310/my-personal-website/static/media/FA.5b69a3fcc2baeb7f6d34.png",
+    "static/media/avatar.png": "/omer310/my-personal-website/static/media/avatar.3fe7f2fddcc18536fa8d.png",
+    "index.html": "/omer310/my-personal-website/index.html",
+    "main.ca747835.css.map": "/omer310/my-personal-website/static/css/main.ca747835.css.map",
+    "main.d953d149.js.map": "/omer310/my-personal-website/static/js/main.d953d149.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ca747835.css",
+    "static/js/main.d953d149.js"
+  ]
+}
