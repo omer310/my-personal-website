@@ -8,6 +8,7 @@ import FA from './Images/FA.png';
 import LIVE from './Images/LIVE.png';
 import LOGO from './Images/Logo.png'; // Import your logo image
 import SET from './Images/SET.png';
+import { HashRouter as Router } from 'react-router-dom';
 
 
 
@@ -17,7 +18,7 @@ const Dock = ({ children }) => {
       {children}
     </div>
   );
-};
+};  
 
 const DockIcon = ({ children, onClick, label }) => {
   return (
@@ -99,158 +100,160 @@ const PersonalWebsite = () => {
   };
 
   return (
-    <div className={`min-h-screen relative font-montserrat ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} transition-colors duration-300`}>
-      <ParticleBackground />
-      <div className="relative z-10">
-        <header className="fixed top-6 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-5xl">
-          <nav className={`px-6 py-3 rounded-xl transition-all duration-300 ${darkMode ? 'bg-gray-800/10' : 'bg-white/10'} shadow-lg backdrop-blur-md`}>
-            <div className="flex items-center justify-between">
-              <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center mr-4">
-                <img 
-                  src={LOGO} 
-                  alt="Logo" 
-                  className="w-full h-full object-cover"
+    <Router>
+      <div className={`min-h-screen relative font-montserrat ${darkMode ? 'dark bg-gray-900 text-white' : 'bg-gray-100 text-black'} transition-colors duration-300`}>
+        <ParticleBackground />
+        <div className="relative z-10">
+          <header className="fixed top-6 left-1/2 transform -translate-x-1/2 z-20 w-full max-w-5xl">
+            <nav className={`px-6 py-3 rounded-xl transition-all duration-300 ${darkMode ? 'bg-gray-800/10' : 'bg-white/10'} shadow-lg backdrop-blur-md`}>
+              <div className="flex items-center justify-between">
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center mr-4">
+                  <img 
+                    src={LOGO} 
+                    alt="Logo" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <Dock>
+                  {[
+                    { id: 'story', icon: <User size={20} />, label: 'Story' },
+                    { id: 'projects', icon: <Folder size={20} />, label: 'Projects' },
+                    { id: 'skills', icon: <Layers size={20} />, label: 'Skills' },
+                    { id: 'education', icon: <GraduationCap size={20} />, label: 'Education' },
+                    { id: 'honors', icon: <Award size={20} />, label: 'Honors' },
+                    { id: 'connect', icon: <Mail size={20} />, label: 'Connect' },
+                  ].map((item) => (
+                    <DockIcon key={item.id} onClick={() => scrollToSection(item.id)} label={item.label}>
+                      {item.icon}
+                    </DockIcon>
+                  ))}
+                  <DockIcon onClick={toggleDarkMode} label={darkMode ? "Light" : "Dark"}>
+                    {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                  </DockIcon>
+                </Dock>
+              </div>
+            </nav>
+          </header>
+
+          <main className="container mx-auto px-6 pt-32">
+            <StorySection />
+
+            <section id="projects" className="py-16">
+              <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-justify">
+                <ProjectCard
+                  title="Food Assistance Form"
+                  description="Revamped a food assistance application form, focusing on improving user experience and data flow. Key features include a streamlined application process.."
+                  technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React']}
+                  image={FA}
+                  projectLink="https://github.com/464squad/CMB-FrontEnd"
+                />
+                <ProjectCard
+                  title="Black Mentor Network Website"
+                  description="Designed and implemented a website for the Black Mentor Network, a non-profit organization that provides mentorship to underprivileged individuals. The website was built using Next.js, Tailwind CSS, and Firebase, and it allows users to browse mentorship opportunities and apply to the ones that interest them."
+                  technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React', 'Next.js', 'Tailwind CSS']}
+                  image={BMN}
+                  projectLink="https://blackmentornetwork.example.com"
+                />
+                <ProjectCard
+                  title="Live Transcription"
+                  description="Turn your computer's sounds into text with this nifty app! Using Deepgram's API, it grabs your PC's audio and converts it to readable words in real-time. Watch as computer babble becomes actual sentences in a cool little window. It's tech magic made simple!"
+                  technologies={['Python', 'Deepgram API']}
+                  image={LIVE}
+                  projectLink="https://github.com/omer310/real-time-audio-transcription"
+                />
+                <ProjectCard
+                  title="Set-Game IOS"
+                  description="Set is a fast-paced card game of visual perception. In this iOS implementation, players identify sets of three cards where each feature is either all the same or all different."
+                  technologies={['Swift', 'SwiftUI','MVVM Architecture','Combine framework (for reactive programming)']}
+                  image={SET}
+                  projectLink="https://github.com/omer310/Set-Game"
                 />
               </div>
-              <Dock>
-                {[
-                  { id: 'story', icon: <User size={20} />, label: 'Story' },
-                  { id: 'projects', icon: <Folder size={20} />, label: 'Projects' },
-                  { id: 'skills', icon: <Layers size={20} />, label: 'Skills' },
-                  { id: 'education', icon: <GraduationCap size={20} />, label: 'Education' },
-                  { id: 'honors', icon: <Award size={20} />, label: 'Honors' },
-                  { id: 'connect', icon: <Mail size={20} />, label: 'Connect' },
-                ].map((item) => (
-                  <DockIcon key={item.id} onClick={() => scrollToSection(item.id)} label={item.label}>
-                    {item.icon}
-                  </DockIcon>
-                ))}
-                <DockIcon onClick={toggleDarkMode} label={darkMode ? "Light" : "Dark"}>
-                  {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-                </DockIcon>
-              </Dock>
-            </div>
-          </nav>
-        </header>
+            </section>
 
-        <main className="container mx-auto px-6 pt-32">
-          <StorySection />
+            <section id="skills" className="py-16">
+              <h2 className="text-3xl font-bold mb-8 text-left">Skills</h2>
+              <motion.div 
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, staggerChildren: 0.1 }}
+              >
+                <SkillCard
+                  title="Frontend Development"
+                  items={[
+                    { name: 'React', proficiency: 90 },
+                    { name: 'Next.js', proficiency: 85 },
+                    { name: 'Vue.js', proficiency: 75 },
+                    { name: 'HTML/CSS', proficiency: 95 }
+                  ]}
+                />
+                <SkillCard
+                  title="Backend Development"
+                  items={[
+                    { name: 'Node.js', proficiency: 80 },
+                    { name: 'Express', proficiency: 75 },
+                    { name: 'Python', proficiency: 90 },
+                    { name: 'Django', proficiency: 70 }
+                  ]}
+                />
+                <SkillCard
+                  title="Database"
+                  items={[
+                    { name: 'MongoDB', proficiency: 85 },
+                    { name: 'PostgreSQL', proficiency: 80 },
+                    { name: 'Firebase', proficiency: 90 }
+                  ]}
+                />
+                <SkillCard
+                  title="DevOps"
+                  items={[
+                    { name: 'Docker', proficiency: 70 },
+                    { name: 'Kubernetes', proficiency: 60 },
+                    { name: 'CI/CD', proficiency: 75 },
+                    { name: 'AWS', proficiency: 70 }
+                  ]}
+                />
+              </motion.div>
+            </section>
 
-          <section id="projects" className="py-16">
-            <h2 className="text-3xl font-bold mb-8">Selected Works</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-justify">
-              <ProjectCard
-                title="Food Assistance Form"
-                description="Revamped a food assistance application form, focusing on improving user experience and data flow. Key features include a streamlined application process.."
-                technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React']}
-                image={FA}
-                projectLink="https://github.com/464squad/CMB-FrontEnd"
-              />
-              <ProjectCard
-                title="Black Mentor Network Website"
-                description="Designed and implemented a website for the Black Mentor Network, a non-profit organization that provides mentorship to underprivileged individuals. The website was built using Next.js, Tailwind CSS, and Firebase, and it allows users to browse mentorship opportunities and apply to the ones that interest them."
-                technologies={['HTML', 'CSS', 'JavaScript', 'Firebase', 'React', 'Next.js', 'Tailwind CSS']}
-                image={BMN}
-                projectLink="https://blackmentornetwork.example.com"
-              />
-              <ProjectCard
-                title="Live Transcription"
-                description="Turn your computer's sounds into text with this nifty app! Using Deepgram's API, it grabs your PC's audio and converts it to readable words in real-time. Watch as computer babble becomes actual sentences in a cool little window. It's tech magic made simple!"
-                technologies={['Python', 'Deepgram API']}
-                image={LIVE}
-                projectLink="https://github.com/omer310/real-time-audio-transcription"
-              />
-              <ProjectCard
-                title="Set-Game IOS"
-                description="Set is a fast-paced card game of visual perception. In this iOS implementation, players identify sets of three cards where each feature is either all the same or all different."
-                technologies={['Swift', 'SwiftUI','MVVM Architecture','Combine framework (for reactive programming)']}
-                image={SET}
-                projectLink="https://github.com/omer310/Set-Game"
-              />
-            </div>
-          </section>
-
-          <section id="skills" className="py-16">
-            <h2 className="text-3xl font-bold mb-8 text-left">Skills</h2>
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, staggerChildren: 0.1 }}
-            >
-              <SkillCard
-                title="Frontend Development"
-                items={[
-                  { name: 'React', proficiency: 90 },
-                  { name: 'Next.js', proficiency: 85 },
-                  { name: 'Vue.js', proficiency: 75 },
-                  { name: 'HTML/CSS', proficiency: 95 }
-                ]}
-              />
-              <SkillCard
-                title="Backend Development"
-                items={[
-                  { name: 'Node.js', proficiency: 80 },
-                  { name: 'Express', proficiency: 75 },
-                  { name: 'Python', proficiency: 90 },
-                  { name: 'Django', proficiency: 70 }
-                ]}
-              />
-              <SkillCard
-                title="Database"
-                items={[
-                  { name: 'MongoDB', proficiency: 85 },
-                  { name: 'PostgreSQL', proficiency: 80 },
-                  { name: 'Firebase', proficiency: 90 }
-                ]}
-              />
-              <SkillCard
-                title="DevOps"
-                items={[
-                  { name: 'Docker', proficiency: 70 },
-                  { name: 'Kubernetes', proficiency: 60 },
-                  { name: 'CI/CD', proficiency: 75 },
-                  { name: 'AWS', proficiency: 70 }
-                ]}
-              />
-            </motion.div>
-          </section>
-
-          <section id="education" className="py-16">
-            <h2 className="text-3xl font-bold mb-8">Education</h2>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-              <div className="mb-6">
-                <h3 className="text-xl font-bold mb-2">Lehman College</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.65</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2024</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Relevant Coursework: Data Structures and Algorithms, Machine Learning, Web Development</p>
+            <section id="education" className="py-16">
+              <h2 className="text-3xl font-bold mb-8">Education</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                <div className="mb-6">
+                  <h3 className="text-xl font-bold mb-2">Lehman College</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Bachelor of Science in Computer Science</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Minor in Mathematics</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.65</span></p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2024</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Relevant Coursework: Data Structures and Algorithms, Machine Learning, Web Development</p>
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold mb-2">Bronx Community College</h3>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Associate Degree in Computer Science</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.7</span></p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2022</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-bold mb-2">Bronx Community College</h3>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Associate Degree in Computer Science</p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">GPA: <span className="text-blue-500 dark:text-blue-300 font-semibold">3.7</span></p>
-                <p className="text-gray-600 dark:text-gray-400 mb-2">Graduated: May 2022</p>
+            </section>
+
+            <section id="honors" className="py-16">
+              <h2 className="text-3xl font-bold mb-8">Honors & Awards</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
+                <ul className="list-disc list-inside space-y-2 text-lg">
+                  <li>President's List</li>
+                  <li>Dean's List</li>
+                  <li>1st Place, University Hackathon 2022</li>
+                </ul>
               </div>
-            </div>
-          </section>
+            </section>
 
-          <section id="honors" className="py-16">
-            <h2 className="text-3xl font-bold mb-8">Honors & Awards</h2>
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 border border-gray-200 dark:border-gray-700">
-              <ul className="list-disc list-inside space-y-2 text-lg">
-                <li>President's List</li>
-                <li>Dean's List</li>
-                <li>1st Place, University Hackathon 2022</li>
-              </ul>
-            </div>
-          </section>
-
-          <ContactSection />
-        </main>
+            <ContactSection />
+          </main>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 };
 
