@@ -44,7 +44,7 @@ const PersonalWebsite = () => {
     } else {
       document.documentElement.classList.remove('dark');
     }
-  }, [darkMode]);
+  }, [darkMode], [generateSquares]);
 
  
   const toggleDarkMode = () => {
