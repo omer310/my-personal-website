@@ -8,7 +8,7 @@ import FA from './Images/FA.png';
 import LIVE from './Images/LIVE.png';
 import LOGO from './Images/Logo.png'; // Import your logo image
 import SET from './Images/SET.png';
-import { HashRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 
 
