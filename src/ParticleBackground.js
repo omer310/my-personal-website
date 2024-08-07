@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 
 const cn = (...classes) => classes.filter(Boolean).join(' ');
@@ -30,12 +30,12 @@ const GridPattern = ({
     ];
   }
 
-  function generateSquares(count) {
+  const generateSquares = useCallback((count) => {
     return Array.from({ length: count }, (_, i) => ({
       id: i,
       pos: getPos(),
     }));
-  }
+  }, [getPos]);
 
   const updateSquarePosition = (id) => {
     setSquares((currentSquares) =>
@@ -54,7 +54,7 @@ const GridPattern = ({
     if (dimensions.width && dimensions.height) {
       setSquares(generateSquares(numSquares));
     }
-  }, [dimensions, numSquares], [generateSquares]);
+  }, [dimensions, numSquares, generateSquares]);
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver((entries) => {
